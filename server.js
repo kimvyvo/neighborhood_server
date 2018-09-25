@@ -3,11 +3,11 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 const path = require('path');
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/bucket_list');
-mongoose.Promise = global.Promise;
+require("./server/config/mongoose.js");
+require("./server/config/routes.js")(app);
 app.listen(8000, function() {
     console.log("listening on port 8000");
+<<<<<<< HEAD
 })
 
 // SCHEMAS
@@ -130,4 +130,6 @@ app.post('/events/:id', function(req, res){
         if(err){response.json({err})}
         else{response.json({message: 'Attendee added'})}
     })
+=======
+>>>>>>> 59e2ced160d70968ae1a86e0659b961665cc4178
 })
