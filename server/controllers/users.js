@@ -5,16 +5,22 @@ var bcrypt = require('bcryptjs');
 
 module.exports = {
     addUser: function(req, res){
-        bcrypt.hash(req.body.pass_hs, 10)
-        .then(hashed_password => {
-            req.body.pass_hs = hashed_password
-            var user = new User(req.body)
-            user.save(function(err){
-                if (err){res.json('Error adding user.')} 
-                else {res.json(user)}
-            })
+        User.find({username: req.body.username}, function(err, user){
+            if (user.length === 1){
+                res.json({error: "Username already taken."})
+            } else {
+                bcrypt.hash(req.body.pass_hs, 10)
+                .then(hashed_password => {
+                    req.body.pass_hs = hashed_password
+                    var user = new User(req.body)
+                    user.save(function(err){
+                        if (err){res.json({error: "Error creating user."})} 
+                        else {res.json(user)}
+                    })
+                })
+                .catch(error => {console.log(error)})
+            }
         })
-        .catch(error => {console.log(error)})
     },
     getAll: function(req, res){
         User.find({}, function(err, users){
