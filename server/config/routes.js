@@ -6,6 +6,7 @@ module.exports = function(app){
     app.get('/users/:id', Users.getOne)
     app.put('/users/:id', Users.updateUser)
     app.delete("/users/:id", Users.deleteUser)
+    app.post('/users/login', Users.login)
     // Routes for events
     app.get('/events', Events.getEvents)
     app.post('/events', Events.addEvent)

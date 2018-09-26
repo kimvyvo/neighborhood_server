@@ -15,11 +15,6 @@ module.exports = {
             })
         })
         .catch(error => {console.log(error)})
-        // const user = new User(req.body)
-        // user.save(function(err){
-        //     if (err) {res.json(err)} 
-        //     else {res.json(user)}
-        // })
     },
     getAll: function(req, res){
         User.find({}, function(err, users){
@@ -28,7 +23,7 @@ module.exports = {
         })
     },
     getOne: function(req, res){
-        User.findOne({_id: req.params.id}, function(err, user){
+        User.findOne({username: req.params.username}, function(err, user){
             if(err){res.json(err)}
             else{res.json(user)}
         })
@@ -44,5 +39,23 @@ module.exports = {
             if(err){res.json(err)}
             else{res.json({message: 'User deleted.'})}
         })
-    }
+    },
+    login: function(req, res){
+        User.findOne({username: req.body.username}, function(err, user){
+            if (users.length === 0){
+                res.json({"no_user_found": "no user found"})
+            }
+            else{
+                bcrypt.compare(req.body.pass, users[0].pass_hs)
+                .then( result => {
+                    if (result == false){
+                        res.json({"password_incorrect": "password incorrect"})
+                    } else if (result == true){
+                        res.json(user)
+                    }
+                })
+                .catch( error => {console.log(error)})
+            }
+        })
+    },
 }
