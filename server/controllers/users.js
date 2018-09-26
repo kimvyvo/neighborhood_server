@@ -1,14 +1,25 @@
 var mongoose = require('mongoose');
 require("../models/user.js");
 var User = mongoose.model('User');
+var bcrypt = require('bcryptjs');
 
 module.exports = {
     addUser: function(req, res){
-        const user = new User(req.body)
-        user.save(function(err){
-            if (err) {res.json(err)} 
-            else {res.json(user)}
+        bcrypt.hash(req.body.pass_hs, 10)
+        .then(hashed_password => {
+            req.body.pass_hs = hashed_password
+            var user = new User(req.body)
+            user.save(function(err){
+                if (err){res.json('Error adding user.')} 
+                else {res.json(user)}
+            })
         })
+        .catch(error => {console.log(error)})
+        // const user = new User(req.body)
+        // user.save(function(err){
+        //     if (err) {res.json(err)} 
+        //     else {res.json(user)}
+        // })
     },
     getAll: function(req, res){
         User.find({}, function(err, users){
