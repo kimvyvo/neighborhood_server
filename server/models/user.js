@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema ({
         type: String,
         default: ''
     },
-    latitiude: {
+    latitude: {
         type: String,
         default: ''
     },
