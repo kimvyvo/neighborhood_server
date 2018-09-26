@@ -41,17 +41,17 @@ module.exports = {
         })
     },
     login: function(req, res){
-        User.findOne({username: req.body.username}, function(err, user){
-            if (users.length === 0){
-                res.json({"no_user_found": "no user found"})
-            }
-            else{
-                bcrypt.compare(req.body.pass, users[0].pass_hs)
+        console.log(req.body.username)
+        User.find({username: req.body.username}, function(err, user){
+            if (user.length === 0){
+                res.json({error: "User does not exist."})
+            } else {
+                bcrypt.compare(req.body.pass, user[0].pass_hs)
                 .then( result => {
                     if (result == false){
-                        res.json({"password_incorrect": "password incorrect"})
+                        res.json({error: "Incorrect password."})
                     } else if (result == true){
-                        res.json(user)
+                        res.json(user[0])
                     }
                 })
                 .catch( error => {console.log(error)})
