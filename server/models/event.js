@@ -4,7 +4,7 @@ const EventSchema = new mongoose.Schema ({
     name: String,
     time: Date,
     location: String,
-    host: UserSchema,
+    host: {type: mongoose.Schema.Types.ObjectId, ref: 'UserSchema'},
     attendees: [UserSchema],
 })
 mongoose.model('Event', EventSchema)
