@@ -6,8 +6,12 @@ module.exports = {
     addEvent: function(req, res){
         const event = new Event(req.body)
         event.save(function(err){
-            if (err) {res.json(err)} 
-            else {res.json(event)}
+            if (err) {
+                res.json(err)
+            } 
+            else {
+                res.json(event)
+            }
         })
     },
     getEvents: function(req, res){
