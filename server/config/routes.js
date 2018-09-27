@@ -12,6 +12,7 @@ module.exports = function(app){
     app.get('/events', Events.getEvents)
     app.post('/events', Events.addEvent)
     app.get('/events/:id', Events.getOneEvent)
+    app.get('/events/user/:id', Events.getUserEvent)
     app.put('/events/:id', Events.updateEvent)
     app.delete('/events/:id', Events.deleteEvent)
     app.post('/events/:id', Events.addAttendee)
