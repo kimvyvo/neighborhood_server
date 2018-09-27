@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 const UserSchema = require('./user.js')
 const ShareSchema = new mongoose.Schema ({
     item: String,
-    lending: Boolean, // true --> lending, false -> looking
+    isLending: Boolean, // true --> lending, false -> looking
     isAvailable: Boolean,
     description: String,
-    lender: UserSchema,
-    borrower: UserSchema
+    lender: {type: mongoose.Schema.Types.ObjectId, ref: 'Lender'},
+    borrower: {type: mongoose.Schema.Types.ObjectId, ref: 'Borrower'}
 })
 mongoose.model('Share', ShareSchema)
 

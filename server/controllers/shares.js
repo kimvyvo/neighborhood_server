@@ -1,14 +1,24 @@
 var mongoose = require('mongoose');
 require("../models/share.js");
 var Share = mongoose.model('Share');
+require("../models/user.js");
+var User = mongoose.model('User');
 
 module.exports = {
     addShare: function(req, res){
-        var share = new Share(req.body)
-        share.save(function(err){
-            if (err){res.json({error: err})}
-            else {res.json(share)}
-        })
+        if (req.body.lender){
+            var share = new Share(req.body)
+            share.save(function(err){
+                if (err){res.json({error: err})}
+                else {res.json(share)}
+            })
+        } else if (req.body.borrower){
+            var share = new Share(req.body)
+            share.save(function(err){
+                if (err){res.json({error: err})}
+                else {res.json(share)}
+            })
+        }
     },
     getShares: function(req, res){
         Share.find({}, function(err, shares){
