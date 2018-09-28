@@ -22,8 +22,48 @@ module.exports = {
     },
     getShares: function(req, res){
         Share.find({}, function(err, shares){
+            var data = []
             if(err){res.json({error: err})}
-            else{res.json({"data":shares})}
+            else{
+                for (share of shares){
+                    if (share.isAvailable){
+                        data.push(share)
+                    }
+                }
+                res.json({"data":data})
+            }
+        })
+    },
+    getUserLending: function(req,res){
+        Share.find({},function(err,shares){
+            if (err){
+                return res.json(err)
+            } else {
+                var data = []
+                for (share of shares){
+                    console.log(share)
+                    if ((share.isLending) && (share.lender == req.params.id)){
+                        data.push(share)
+                    }
+                }
+                return res.json({"data":data})
+            }
+        })
+    },
+    getUserBorrowing: function(req,res){
+        Share.find({},function(err,shares){
+            if (err){
+                return res.json(err)
+            } else {
+                var data = []
+                for (share of shares){
+                    console.log(share)
+                    if (!(share.isLending) && (share.borrower == req.params.id)){
+                        data.push(share)
+                    }
+                }
+                return res.json({"data":data})
+            }
         })
     },
     getOneShare: function(req, res){

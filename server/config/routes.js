@@ -20,6 +20,8 @@ module.exports = function(app){
     app.get('/shares', Shares.getShares)
     app.post('/shares', Shares.addShare)
     app.get('/shares/:id', Shares.getOneShare)
+    app.get('/shares/lending/:id', Shares.getUserLending)
+    app.get('/shares/borrowing/:id', Shares.getUserBorrowing)
     app.put('/shares/:id', Shares.updateShare)
     app.delete('/shares/:id', Shares.deleteShare)
 }
