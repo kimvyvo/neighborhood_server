@@ -31,7 +31,9 @@ module.exports = {
     getOneUser: function(req, res){
         User.findOne({_id: req.params.id}, function(err, user){
             if(err){res.json({error: err})}
-            else{res.json(user)}
+            else{
+                res.json({username: user.username, address: user.address, contact: user.contact, longitude: user.longitude, latitude: user.latitude})
+            }
         })
     },
     updateUser: function(req, res){
