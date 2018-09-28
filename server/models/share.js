@@ -6,7 +6,9 @@ const ShareSchema = new mongoose.Schema ({
     isAvailable: Boolean,
     description: String,
     lender: {type: mongoose.Schema.Types.ObjectId, ref: 'Lender'},
-    borrower: {type: mongoose.Schema.Types.ObjectId, ref: 'Borrower'}
+    borrower: {type: mongoose.Schema.Types.ObjectId, ref: 'Borrower'},
+    longitude: {type: String, default: ''},
+    latitude: {type: String, default: ''},
 })
 mongoose.model('Share', ShareSchema)
 
