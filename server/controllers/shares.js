@@ -24,7 +24,7 @@ module.exports = {
         console.log("got here")
         Share.find({}, function(err, shares){
             if(err){res.json({error: err})}
-            else{res.json(shares)}
+            else{res.json({"data":shares})}
         })
     },
     getOneShare: function(req, res){
