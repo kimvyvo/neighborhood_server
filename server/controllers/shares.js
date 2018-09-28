@@ -25,12 +25,30 @@ module.exports = {
             var data = []
             if(err){res.json({error: err})}
             else{
-                for (share of shares){
-                    if (share.isAvailable){
-                        data.push(share)
+                // for (share of shares){
+                //     if (share.isAvailable){
+                //         data.push(share)
+                //     }
+                // }
+                // console.log(data)
+                res.json({"data":shares})
+            }
+        })
+    },
+    addUserResponse: function(req,res){
+        User.findOne({_id: req.body.responder},function(err, user){
+            console.log("Responder user_______")
+            console.log(user)
+            if (err){
+                return res.json(err)
+            }else {
+                Share.findByIdAndUpdate({_id: req.params.id},{$push: {responses: user}}, function(err){
+                    if(err){
+                        return res.json(err)
+                    }else{
+                        return res.json({"status":200})
                     }
-                }
-                res.json({"data":data})
+                })
             }
         })
     },
